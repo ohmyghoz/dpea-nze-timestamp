@@ -13,6 +13,9 @@ export interface TimestampData {
   textColor: string;
   backgroundColor: string;
   backgroundOpacity: number;
+  // Green Energy Options
+  energyMode: 'Save Electricity' | 'Air Conditioner';
+  timeOfDay: 'Pagi' | 'Siang';
 }
 
 export interface UploadedImage {
@@ -37,4 +40,7 @@ export const defaultTimestampData: TimestampData = {
   textColor: '#ffffff',
   backgroundColor: '#000000',
   backgroundOpacity: 0.5,
+  // Green Energy Defaults
+  energyMode: 'Air Conditioner',
+  timeOfDay: 'Pagi',
 };

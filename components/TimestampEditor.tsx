@@ -7,7 +7,7 @@ import { Switch } from '@/components/ui/switch';
 import { Slider } from '@/components/ui/slider';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { MapPin, Clock, Calendar, Download, RefreshCw, Navigation } from 'lucide-react';
+import { MapPin, Clock, Calendar, Download, RefreshCw, Navigation, Zap, Sun } from 'lucide-react';
 
 interface TimestampEditorProps {
   data: TimestampData;
@@ -58,9 +58,9 @@ export function TimestampEditor({
   };
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="text-lg">Customize Timestamp</CardTitle>
+    <Card className="border-green-200 dark:border-green-800 shadow-md">
+      <CardHeader className="bg-green-50 dark:bg-green-900/20 border-b border-green-100 dark:border-green-800">
+        <CardTitle className="text-lg text-green-800 dark:text-green-300">Customize Timestamp</CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
         {/* Date Settings */}
@@ -185,7 +185,64 @@ export function TimestampEditor({
           )}
         </div>
 
-        {/* Position */}
+        {/* Green Energy Options */}
+        <div className="space-y-4 pt-4 border-t border-green-100 dark:border-green-900">
+          <div className="flex items-center gap-2">
+            <Zap className="w-4 h-4 text-green-600" />
+            <Label className="text-green-700 dark:text-green-400 font-medium">Green Energy Options</Label>
+          </div>
+          
+          {/* Energy Mode */}
+          <div className="space-y-2">
+            <Label className="text-xs text-zinc-500">Energy Mode</Label>
+            <div className="grid grid-cols-2 gap-2">
+              <Button
+                variant={data.energyMode === 'Air Conditioner' ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => updateField('energyMode', 'Air Conditioner')}
+                className={data.energyMode === 'Air Conditioner' ? 'bg-green-600 hover:bg-green-700' : ''}
+              >
+                Air Conditioner
+              </Button>
+              <Button
+                variant={data.energyMode === 'Save Electricity' ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => updateField('energyMode', 'Save Electricity')}
+                className={data.energyMode === 'Save Electricity' ? 'bg-green-600 hover:bg-green-700' : ''}
+              >
+                Save Electricity
+              </Button>
+            </div>
+          </div>
+
+          {/* Time of Day */}
+          <div className="space-y-2">
+            <div className="flex items-center gap-2">
+              <Sun className="w-4 h-4 text-yellow-500" />
+              <Label className="text-xs text-zinc-500">Time of Day</Label>
+            </div>
+            <div className="grid grid-cols-2 gap-2">
+              <Button
+                variant={data.timeOfDay === 'Pagi' ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => updateField('timeOfDay', 'Pagi')}
+                className={data.timeOfDay === 'Pagi' ? 'bg-green-600 hover:bg-green-700' : ''}
+              >
+                Pagi
+              </Button>
+              <Button
+                variant={data.timeOfDay === 'Siang' ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => updateField('timeOfDay', 'Siang')}
+                className={data.timeOfDay === 'Siang' ? 'bg-green-600 hover:bg-green-700' : ''}
+              >
+                Siang
+              </Button>
+            </div>
+          </div>
+        </div>
+
+        {/* Position }
         <div className="space-y-2">
           <Label>Position</Label>
           <div className="grid grid-cols-2 gap-2">
@@ -264,9 +321,9 @@ export function TimestampEditor({
 
         {/* Actions */}
         <div className="flex gap-2 pt-4 border-t">
-          <Button onClick={onDownload} className="flex-1">
+          <Button onClick={onDownload} className="flex-1 bg-green-600 hover:bg-green-700 text-white">
             <Download className="w-4 h-4 mr-2" />
-            Download
+            Download Report
           </Button>
           <Button variant="outline" onClick={onReset}>
             <RefreshCw className="w-4 h-4 mr-2" />

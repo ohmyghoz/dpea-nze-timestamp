@@ -38,7 +38,7 @@ export function ImagePreview({
   }, [timestampData]);
 
   return (
-    <div className="overflow-auto max-h-[70vh] rounded-lg border border-zinc-200 dark:border-zinc-800">
+    <div className="overflow-auto max-h-[70vh] rounded-lg border-2 border-green-200 dark:border-green-800 bg-green-50/30 dark:bg-green-900/10">
       <canvas
         ref={canvasRef}
         className="max-w-full h-auto block"

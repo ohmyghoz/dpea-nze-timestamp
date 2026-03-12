@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback } from 'react';
-import { Upload } from 'lucide-react';
+import { Upload, Leaf } from 'lucide-react';
 
 interface PhotoUploaderProps {
   onUpload: (file: File) => void;
@@ -33,7 +33,7 @@ export function PhotoUploader({ onUpload }: PhotoUploaderProps) {
     <div
       onDrop={handleDrop}
       onDragOver={(e) => e.preventDefault()}
-      className="border-2 border-dashed border-zinc-300 dark:border-zinc-700 rounded-xl p-12 text-center hover:border-zinc-400 dark:hover:border-zinc-600 transition-colors cursor-pointer"
+      className="border-2 border-dashed border-green-300 dark:border-green-700 rounded-xl p-12 text-center hover:border-green-500 dark:hover:border-green-500 transition-colors cursor-pointer bg-green-50/50 dark:bg-green-900/10"
     >
       <input
         type="file"
@@ -43,12 +43,14 @@ export function PhotoUploader({ onUpload }: PhotoUploaderProps) {
         id="photo-upload"
       />
       <label htmlFor="photo-upload" className="cursor-pointer">
-        <Upload className="w-12 h-12 mx-auto mb-4 text-zinc-400" />
-        <p className="text-lg font-medium text-zinc-700 dark:text-zinc-300">
+        <div className="w-16 h-16 mx-auto mb-4 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center">
+          <Leaf className="w-8 h-8 text-green-600 dark:text-green-400" />
+        </div>
+        <p className="text-lg font-medium text-green-800 dark:text-green-300">
           Drop your photo here, or click to browse
         </p>
-        <p className="text-sm text-zinc-500 mt-2">
-          Supports JPG, PNG, WebP
+        <p className="text-sm text-green-600 dark:text-green-500 mt-2">
+          Supports JPG, PNG, WebP for Green Energy Reporting
         </p>
       </label>
     </div>

@@ -8,7 +8,30 @@ import { TimestampData, UploadedImage, defaultTimestampData } from '@/lib/types'
 import { extractExifData } from '@/lib/exif';
 import { downloadCanvas } from '@/lib/canvas';
 import { Button } from '@/components/ui/button';
-import { Camera, X } from 'lucide-react';
+import { Leaf, X } from 'lucide-react';
+
+// Indonesian month and day names for filename
+const indonesianMonths = [
+  'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
+  'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+];
+
+const indonesianDays = [
+  'Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'
+];
+
+function generateFilename(timestampData: TimestampData): string {
+  const date = new Date(timestampData.date);
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1; // 1-12
+  const day = date.getDate();
+  const yyyymmdd = `${year}${month.toString().padStart(2, '0')}${day.toString().padStart(2, '0')}`;
+  
+  const monthName = indonesianMonths[date.getMonth()];
+  const dayName = indonesianDays[date.getDay()];
+  
+  return `DPEA OJK NZE_${yyyymmdd}_${dayName}_${day}_${monthName}_${timestampData.energyMode}_${timestampData.timeOfDay}.jpg`;
+}
 
 export default function Home() {
   const [image, setImage] = useState<UploadedImage | null>(null);
@@ -64,11 +87,11 @@ export default function Home() {
   }, []);
 
   const handleDownload = useCallback(() => {
-    if (canvasRef.current && image) {
-      const filename = `timestamped_${image.file.name.replace(/\.[^/.]+$/, '')}.jpg`;
+    if (canvasRef.current) {
+      const filename = generateFilename(timestampData);
       downloadCanvas(canvasRef.current, filename);
     }
-  }, [image]);
+  }, [timestampData]);
 
   const handleReset = useCallback(() => {
     setTimestampData(defaultTimestampData);
@@ -119,13 +142,13 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
+    <main className="min-h-screen bg-green-50 dark:bg-green-950/20">
       {/* Header */}
-      <header className="border-b bg-white dark:bg-zinc-900 sticky top-0 z-10">
+      <header className="border-b border-green-100 dark:border-green-900 bg-white dark:bg-zinc-900 sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-zinc-900 dark:bg-white rounded-lg flex items-center justify-center">
-              <Camera className="w-5 h-5 text-white dark:text-zinc-900" />
+            <div className="w-8 h-8 bg-green-600 rounded-lg flex items-center justify-center">
+              <Leaf className="w-5 h-5 text-white" />
             </div>
             <h1 className="text-xl font-bold">DPEA NZE Timestamp Application</h1>
           </div>
@@ -146,10 +169,10 @@ export default function Home() {
               <h2 className="text-3xl font-bold mb-3">
                 DPEA NZE Timestamp Application
               </h2>
-              <p className="text-zinc-600 dark:text-zinc-400">
-                Upload a photo and customize the timestamp, date, and GPS location overlay.
+              <p className="text-green-700 dark:text-green-400">
+                Upload a photo for Green Energy reporting with customizable timestamp, date, and GPS location overlay.
                 <br />
-                Extracts data automatically from your photo&apos;s EXIF metadata.
+                Supports DPEA NZE reporting format with energy mode and time of day.
               </p>
             </div>
             <PhotoUploader onUpload={handleUpload} />
@@ -182,9 +205,9 @@ export default function Home() {
       </div>
 
       {/* Footer */}
-      <footer className="border-t mt-auto py-6 bg-white dark:bg-zinc-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-sm text-zinc-500">
-          <p>DPEA NZE Timestamp Application • Add beautiful timestamps to your memories</p>
+      <footer className="border-t border-green-100 dark:border-green-900 mt-auto py-6 bg-white dark:bg-zinc-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-sm text-green-600 dark:text-green-400">
+          <p>DPEA NZE Timestamp Application • Green Energy Initiative Reporting</p>
         </div>
       </footer>
     </main>

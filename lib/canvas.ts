@@ -20,7 +20,15 @@ function formatIndonesianDate(dateStr: string): string {
   const month = indonesianMonths[date.getMonth()];
   const year = date.getFullYear();
   
-  return `${dayName}, ${day} ${month} ${year}`;
+  return `📅 ${dayName}, ${day} ${month} ${year}`;
+}
+
+function formatTimeWithAmPm(timeStr: string): string {
+  const [hours, minutes] = timeStr.split(':').map(Number);
+  const ampm = hours >= 12 ? 'PM' : 'AM';
+  const displayHours = hours % 12 || 12;
+  const time = `${displayHours}:${minutes.toString().padStart(2, '0')} ${ampm}`;
+  return `🕐 ${time} | GMT +7 Bangkok, Jakarta Time`;
 }
 
 export function drawTimestampOnCanvas(
@@ -46,7 +54,7 @@ export function drawTimestampOnCanvas(
   }
   
   if (timestampData.showTime && timestampData.time) {
-    lines.push({ text: timestampData.time });
+    lines.push({ text: formatTimeWithAmPm(timestampData.time) });
   }
   
   if (timestampData.showAddress && timestampData.address) {
